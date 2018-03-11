@@ -1,6 +1,4 @@
 package com.coachu.util;
-
-
 import com.coachu.HasId;
 import com.coachu.util.exception.NotFoundException;
 

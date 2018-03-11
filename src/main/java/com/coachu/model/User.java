@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
-import static ru.javawebinar.topjava.util.UserUtil.DEFAULT_CALORIES_PER_DAY;
+import static com.coachu.util.UserUtil.DEFAULT_CALORIES_PER_DAY;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NamedQueries({
@@ -63,10 +63,11 @@ public class User extends AbstractNamedEntity {
     @Range(min = 10, max = 10000)
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("dateTime DESC")
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+//    @OrderBy("dateTime DESC")
+
 //    @JsonIgnore
-    protected List<Meal> meals;
+    //protected List<Meal> meals;
 
     public User() {
     }
@@ -137,9 +138,9 @@ public class User extends AbstractNamedEntity {
         this.roles = CollectionUtils.isEmpty(roles) ? Collections.emptySet() : EnumSet.copyOf(roles);
     }
 
-    public List<Meal> getMeals() {
-        return meals;
-    }
+//    public List<Meal> getMeals() {
+//        return meals;
+//    }
 
     @Override
     public String toString() {
