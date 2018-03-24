@@ -14,8 +14,8 @@ function add() {
     $("#modalTitle").html(i18n["addTitle"]);
     form.find(":input").val("");
     $("#editRow").modal();
-}
 
+}
 function updateRow(id) {
     $("#modalTitle").html(i18n["editTitle"]);
     $.get(ajaxUrl + id, function (data) {

@@ -1,7 +1,7 @@
 package com.coachu.service;
 
 
-import com.coachu.model.User;
+import com.coachu.model.user.User;
 import com.coachu.to.UserTo;
 import com.coachu.util.exception.NotFoundException;
 

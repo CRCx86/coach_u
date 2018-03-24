@@ -2,7 +2,7 @@ package com.coachu;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.coachu.model.User;
+import com.coachu.model.user.User;
 import com.coachu.to.UserTo;
 import com.coachu.util.UserUtil;
 

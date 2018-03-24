@@ -3,7 +3,7 @@ package com.coachu.repository.datajpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-import com.coachu.model.User;
+import com.coachu.model.user.User;
 import com.coachu.repository.UserRepository;
 
 import java.util.List;

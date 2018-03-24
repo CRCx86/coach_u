@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.coachu.AuthorizedUser;
-import com.coachu.model.User;
+import com.coachu.model.user.User;
 import com.coachu.to.UserTo;
 
 @RestController

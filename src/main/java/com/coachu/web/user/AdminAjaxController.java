@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.coachu.model.User;
+import com.coachu.model.user.User;
 import com.coachu.to.UserTo;
 import com.coachu.util.UserUtil;
 

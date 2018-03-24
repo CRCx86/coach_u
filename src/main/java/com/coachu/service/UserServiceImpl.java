@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import com.coachu.AuthorizedUser;
-import com.coachu.model.User;
+import com.coachu.model.user.User;
 import com.coachu.repository.UserRepository;
 import com.coachu.to.UserTo;
 import com.coachu.util.UserUtil;

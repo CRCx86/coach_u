@@ -1,7 +1,7 @@
 package com.coachu.util;
 
-import com.coachu.model.Role;
-import com.coachu.model.User;
+import com.coachu.model.user.Role;
+import com.coachu.model.user.User;
 import com.coachu.to.UserTo;
 
 public class UserUtil {

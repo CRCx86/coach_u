@@ -1,5 +1,6 @@
 package com.coachu.web;
 
+import com.coachu.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +12,12 @@ import com.coachu.AuthorizedUser;
 @Controller
 public class RootController {
 
-//    @Autowired
-//    private MealService mealService;
+    @Autowired
+    private WorkoutService workoutService;
 
     @GetMapping("/")
     public String root() {
-        return "redirect:users";
+        return "redirect:workouts";
     }
 
     @GetMapping("/users")
@@ -24,10 +25,16 @@ public class RootController {
         return "users";
     }
 
-//    @GetMapping(value = "/login")
-//    public String login() {
-//        return "login";
-//    }
+    @GetMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping(value = "/workouts")
+    public String workouts(Model model) {
+        model.addAttribute("workouts", workoutService.getAll(AuthorizedUser.id()));
+        return "workouts";
+    }
 
 //    @GetMapping("/meals")
 //    public String meals(Model model) {

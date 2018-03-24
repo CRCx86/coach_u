@@ -3,7 +3,7 @@ package com.coachu.web.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.coachu.model.User;
+import com.coachu.model.user.User;
 import com.coachu.service.UserService;
 import com.coachu.to.UserTo;
 

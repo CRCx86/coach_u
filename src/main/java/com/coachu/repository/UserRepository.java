@@ -1,6 +1,6 @@
 package com.coachu.repository;
 
-import com.coachu.model.User;
+import com.coachu.model.user.User;
 
 import java.util.List;
 

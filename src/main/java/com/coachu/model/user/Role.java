@@ -1,4 +1,4 @@
-package com.coachu.model;
+package com.coachu.model.user;
 
 import org.springframework.security.core.GrantedAuthority;
 

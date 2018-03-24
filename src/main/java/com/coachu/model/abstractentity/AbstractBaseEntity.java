@@ -1,4 +1,4 @@
-package com.coachu.model;
+package com.coachu.model.abstractentity;
 
 import org.hibernate.Hibernate;
 import com.coachu.HasId;

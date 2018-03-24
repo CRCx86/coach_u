@@ -1,4 +1,6 @@
-package com.coachu.model;
+package com.coachu.model.abstractentity;
+
+import com.coachu.model.abstractentity.AbstractBaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
