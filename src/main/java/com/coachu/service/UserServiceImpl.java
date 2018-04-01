@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -17,6 +18,7 @@ import com.coachu.util.exception.NotFoundException;
 
 import java.util.List;
 
+import static com.coachu.util.UserUtil.prepareToSave;
 import static com.coachu.util.ValidationUtil.checkNotFound;
 import static com.coachu.util.ValidationUtil.checkNotFoundWithId;
 
@@ -24,17 +26,19 @@ import static com.coachu.util.ValidationUtil.checkNotFoundWithId;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Override
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
-        return repository.save(user);
+        return repository.save(prepareToSave(user, passwordEncoder));
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -64,7 +68,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
-        checkNotFoundWithId(repository.save(user), user.getId());
+        checkNotFoundWithId(repository.save(prepareToSave(user, passwordEncoder)), user.getId());
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -72,7 +76,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void update(UserTo userTo) {
         User user = get(userTo.getId());
-        repository.save(UserUtil.updateFromTo(user, userTo));
+        repository.save(prepareToSave(user, passwordEncoder));
     }
 
 
@@ -95,7 +99,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getWithMeals(int id) {
+    public User getWithWorkouts(int id) {
         return checkNotFoundWithId(repository.getWithMeals(id), id);
     }
 }

@@ -1,9 +1,16 @@
 package com.coachu.model.workout;
 
+import com.coachu.View;
 import com.coachu.model.abstractentity.AbstractBaseEntity;
 import com.coachu.model.user.User;
+import com.coachu.util.DateTimeUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -27,6 +34,7 @@ public class Workout extends AbstractBaseEntity {
     @Column(name = "description", nullable = false)
     @NotBlank
     @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
     private String description;
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -90,6 +98,18 @@ public class Workout extends AbstractBaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @JsonGetter
+    @JsonView()
+    @JsonFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    public LocalDateTime getDateTimeUI() {
+        return dateTime;
+    }
+
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    public void setDateTimeUI(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     @Override
