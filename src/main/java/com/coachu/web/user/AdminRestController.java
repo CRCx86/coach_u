@@ -1,8 +1,10 @@
 package com.coachu.web.user;
 
+import com.coachu.View;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.coachu.model.user.User;
@@ -47,7 +49,7 @@ public class AdminRestController extends AbstractUserController {
 
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody User user, @PathVariable("id") int id) {
+    public void update(@Validated(View.Web.class) @RequestBody User user, @PathVariable("id") int id) {
         super.update(user, id);
     }
 

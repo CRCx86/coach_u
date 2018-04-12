@@ -14,10 +14,20 @@ function clearFilter() {
     $.get(ajaxUrl, updateTableByData());
 }
 
+$.ajaxSetup({
+    converters: {
+        "text json": function (stringData) {
+            var json = JSON.parse(stringData);
+            $(json).each(function () {
+                this.dateTime = this.dateTime.replace('T', ' ').substr(0, 16);
+            });
+            return json;
+        }
+    }
+});
+
 $(function () {
-    datatableApi = $("#datatable").DataTable({
-        "paging": false,
-        "info": true,
+    datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [
             {
                 "data": "dateTime"
@@ -26,18 +36,63 @@ $(function () {
                 "data": "description"
             },
             {
-                "defaultContent": "Edit",
+                "data": "workoutTypes"
+            },
+            {
+                "render": renderEditBtn,
+                "defaultContent": "",
                 "orderable": false
             },
             {
-                "defaultContent": "Delete",
+                "render": renderDeleteBtn,
+                "defaultContent": "",
                 "orderable": false
             }
         ],
         "order": [
-            0,
-            "desc"
+            [
+                0,
+                "desc"
+            ]
         ]
+        ,
+        "createdRow": function (row, data, dataIndex) {
+            $(row).addClass(data.exceed ? 'exceeded' : 'normal');
+        }
+    }));
+
+    $.datetimepicker.setLocale(localeCode);
+
+    //  http://xdsoft.net/jqplugins/datetimepicker/
+    var startDate = $('#startDate');
+    var endDate = $('#endDate');
+    startDate.datetimepicker({
+        timepicker: false,
+        format: 'Y-m-d',
+        formatDate: 'Y-m-d',
+        onShow: function (ct) {
+            this.setOptions({
+                maxDate: endDate.val() ? endDate.val() : false
+            })
+        }
     });
-    makeEditable();
+    endDate.datetimepicker({
+        timepicker: false,
+        format: 'Y-m-d',
+        formatDate: 'Y-m-d',
+        onShow: function (ct) {
+            this.setOptions({
+                minDate: startDate.val() ? startDate.val() : false
+            })
+        }
+    });
+
+    $('#startTime, #endTime').datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+
+    $('#dateTime').datetimepicker({
+        format: 'Y-m-d H:i'
+    });
 });

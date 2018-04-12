@@ -19,7 +19,7 @@ public interface UserRepository {
     List<User> getAll();
 
     //TODO: переписать на workouts
-    default User getWithMeals(int id){
+    default User getWithWorkouts(int id){
         throw new UnsupportedOperationException();
     }
 }

@@ -1,6 +1,7 @@
 package com.coachu.web;
 
 import com.coachu.model.user.User;
+import com.coachu.to.UserTo;
 import com.coachu.util.UserUtil;
 import com.coachu.web.user.AbstractUserController;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -44,20 +45,19 @@ public class RootController extends AbstractUserController {
 
     @GetMapping("/profile")
     public String profile(ModelMap model, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        model.addAttribute("user", authorizedUser.getUser());
+        model.addAttribute("userTo", authorizedUser.getUserTo());
         return "profile";
     }
 
     @PostMapping("/profile")
-    public String updateProfile(@Valid User user, BindingResult result, SessionStatus status, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-
+    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
         if (result.hasErrors()) {
             return "profile";
         }
 
         try {
-            super.update(user, authorizedUser.getId());
-            authorizedUser.update(user);
+            super.update(userTo, authorizedUser.getId());
+            authorizedUser.update(userTo);
             status.setComplete();
             return "redirect:workouts";
         }catch (DataIntegrityViolationException ex) {
@@ -68,22 +68,22 @@ public class RootController extends AbstractUserController {
 
     @GetMapping("/register")
     public String register(ModelMap model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("userTo", new UserTo());
         model.addAttribute("register", true);
         return "profile";
     }
 
     @PostMapping("/register")
-    public String saveRegister(@Valid User user, BindingResult result, SessionStatus status, ModelMap model) {
+    public String saveRegister(@Valid UserTo userTo, BindingResult result, SessionStatus status, ModelMap model) {
 
         if (result.hasErrors()) {
             model.addAttribute("register", true);
             return "profile";
         }
         try {
-            super.create(UserUtil.createNewFromTo(user));
+            super.create(UserUtil.createNewFromTo(userTo));
             status.setComplete();
-            return "redirect:login?message=app.registered&username=" + user.getEmail();
+            return "redirect:login?message=app.registered&username=" + userTo.getEmail();
         } catch (DataIntegrityViolationException  ex) {
             result.rejectValue("email", EXCEPTION_DUPLICATE_EMAIL);
             model.addAttribute("register", true);
@@ -91,10 +91,4 @@ public class RootController extends AbstractUserController {
         }
     }
 
-//    @GetMapping("/meals")
-//    public String meals(Model model) {
-//        model.addAttribute("meals",
-//                MealsUtil.getWithExceeded(mealService.getAll(AuthorizedUser.id()), AuthorizedUser.getCaloriesPerDay()));
-//        return "meals";
-//    }
 }

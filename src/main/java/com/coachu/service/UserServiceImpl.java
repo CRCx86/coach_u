@@ -19,6 +19,7 @@ import com.coachu.util.exception.NotFoundException;
 import java.util.List;
 
 import static com.coachu.util.UserUtil.prepareToSave;
+import static com.coachu.util.UserUtil.updateFromTo;
 import static com.coachu.util.ValidationUtil.checkNotFound;
 import static com.coachu.util.ValidationUtil.checkNotFoundWithId;
 
@@ -75,7 +76,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     @Override
     public void update(UserTo userTo) {
-        User user = get(userTo.getId());
+        User user = updateFromTo(get(userTo.getId()), userTo);
         repository.save(prepareToSave(user, passwordEncoder));
     }
 
@@ -100,6 +101,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getWithWorkouts(int id) {
-        return checkNotFoundWithId(repository.getWithMeals(id), id);
+        return checkNotFoundWithId(repository.getWithWorkouts(id), id);
     }
 }

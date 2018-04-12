@@ -23,12 +23,12 @@ public class ProfileRestController extends AbstractUserController {
     @DeleteMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        super.delete(authorizedUser.id());
+        super.delete(authorizedUser.getId());
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@Valid @RequestBody User user, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        super.update(user, authorizedUser.id());
+    public void update(@Valid @RequestBody UserTo userTo, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
+        super.update(userTo, authorizedUser.getId());
     }
 
     @GetMapping(value = "/text")

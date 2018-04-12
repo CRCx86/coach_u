@@ -11,12 +11,11 @@ import static java.util.Objects.requireNonNull;
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
     private static final long serialVersionUID = 1L;
 
-    private User user;
+    private UserTo userTo;
 
     public AuthorizedUser(User user) {
         super(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, user.getRoles());
-        //this.userTo = UserUtil.asTo(user);
-        this.user = user;
+        this.userTo = UserUtil.asTo(user);
     }
 
     public static AuthorizedUser safeGet() {
@@ -35,34 +34,27 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
     }
 
     public int getId() {
-        return user.getId();
+        return userTo.getId();
     }
 
     public static int id() {
-//        return get().userTo.getId();
-        return get().user.getId();
+        return get().userTo.getId();
     }
 
     public static int getCaloriesPerDay() {
-//        return get().userTo.getCaloriesPerDay();
-        return get().user.getCaloriesPerDay();
+        return get().userTo.getCaloriesPerDay();
     }
 
-//    public UserTo getUserTo() {
-//        return userTo;
-//    }
-
-    public void update(User newUser) {
-        user = newUser;
+    public void update(UserTo newTo) {
+        userTo = newTo;
     }
 
-    public User getUser() {
-        return user;
+    public UserTo getUserTo() {
+        return userTo;
     }
 
     @Override
     public String toString() {
-//        return userTo.toString();
-        return user.toString();
+        return userTo.toString();
     }
 }
